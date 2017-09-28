@@ -7,9 +7,8 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import com.caiyi.data.TrendData;
-
+import com.caiyi.ui.BlueTrendChart;
 import com.caiyi.ui.LottoTrendView;
-import com.caiyi.ui.RedTrendChart;
 import com.lottery9188.Activity.R;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -28,11 +27,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class LottoTrendActivity extends Activity   {
+public class LottoTrendActivity1 extends Activity  {
 
     private LottoTrendView mTrendView;
     final int maxSignleNum = 9;
-    private RedTrendChart mTrendChart;
+    private BlueTrendChart mTrendChart;
 
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -44,16 +43,17 @@ public class LottoTrendActivity extends Activity   {
     private Handler mHandler = new Handler() {
         public void handleMessage(Message paramMessage) {
             super.handleMessage(paramMessage);
-            LottoTrendActivity.this.mTrendChart.updateData("01", (ArrayList) paramMessage.obj);
+            LottoTrendActivity1.this.mTrendChart.updateData("01", (ArrayList) paramMessage.obj);
         }
     };
 
     private void initViews() {
         this.mTrendView = (LottoTrendView) findViewById(R.id.ltv_trendView);
-        this.mTrendChart = new RedTrendChart(this, this.mTrendView);
+        this.mTrendChart = new BlueTrendChart(this, this.mTrendView);
+        this.mTrendChart.setBlueCount(16);
         this.mTrendView.setChart(this.mTrendChart);
         this.mTrendChart.setShowYilou(true);
-        this.mTrendChart.setDrawLine(false);
+        this.mTrendChart.setDrawLine(true);
 //        this.mTrendChart.setSelectedChangeListener(this);
     }
 
@@ -61,7 +61,7 @@ public class LottoTrendActivity extends Activity   {
 
     private void loadData() {
         // 根据01/30.xml 或者是01/50.xm可以调整数字
-        String url = "http://mobile.9188.com/data/app/zst/01/30.xml";
+        String url = "http://mobile.9188.com/data/app/zst/01/50.xml";
 
         Request request = new Request.Builder()
                 .url(url)
@@ -120,8 +120,7 @@ public class LottoTrendActivity extends Activity   {
                     trendData.setTimes(newPullParser.getAttributeValue(null, "times"));
                     trendData.setForm(newPullParser.getAttributeValue(null, "form"));
                     arrayList.add(trendData);
-                }
-               else if ("dis".equals(name)) {
+                } else if ("dis".equals(name)) {
                     r0 = new TrendData();
                     r0.setType("dis");
                     r0.setRed(newPullParser.getAttributeValue(null, "red"));
@@ -133,7 +132,8 @@ public class LottoTrendActivity extends Activity   {
                     r0.setNum(newPullParser.getAttributeValue(null, "num"));
                     arrayList2.add(r0);
                 }
-              /*  else if ("avg".equals(name)) {
+
+               /* else if ("avg".equals(name)) {
                     r0 = new TrendData();
                     r0.setType("avg");
                     r0.setRed(newPullParser.getAttributeValue(null, "red"));
@@ -144,8 +144,7 @@ public class LottoTrendActivity extends Activity   {
                     r0.setThree(newPullParser.getAttributeValue(null, "three"));
                     r0.setNum(newPullParser.getAttributeValue(null, "num"));
                     arrayList2.add(r0);
-                }
-                else if ("mmv".equals(name)) {
+                } else if ("mmv".equals(name)) {
                     r0 = new TrendData();
                     r0.setType("mmv");
                     r0.setRed(newPullParser.getAttributeValue(null, "red"));
@@ -156,8 +155,7 @@ public class LottoTrendActivity extends Activity   {
                     r0.setThree(newPullParser.getAttributeValue(null, "three"));
                     r0.setNum(newPullParser.getAttributeValue(null, "num"));
                     arrayList2.add(r0);
-                }
-                else if ("mlv".equals(name)) {
+                } else if ("mlv".equals(name)) {
                     r0 = new TrendData();
                     r0.setType("mlv");
                     r0.setRed(newPullParser.getAttributeValue(null, "red"));

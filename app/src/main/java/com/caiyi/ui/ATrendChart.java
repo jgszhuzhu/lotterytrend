@@ -51,7 +51,7 @@ public abstract class ATrendChart implements ITrendChart {
     protected int mDivHeight;
     protected int mDivWidth;
     final float mHalfSize = 0.5f;
-    protected boolean mInitOk = false;
+
     protected int mLcTextSize;
     protected Paint mPaint = new Paint(1);
     protected final Picture mPicContent = new Picture();
@@ -136,22 +136,35 @@ public abstract class ATrendChart implements ITrendChart {
     public void initChart(Context context, int i, int i2, float f) {
         if (i != 0 && i2 != 0) {
             System.currentTimeMillis();
+            //绘制x轴TOP
             drawXTop();
+            //绘制期号两个字
             drawLeftTop();
+            //绘制左边的期号
             drawY();
+            //绘制预算区点击内容
             drawXBottom();
+            //绘制内容
             drawContent();
+            //绘制预算区几个字
             drawLeftBottom();
-            this.mInitOk = true;
+            setInitPosition();
         }
     }
 
-    public void setInitOk(boolean z) {
-        this.mInitOk = z;
+    /**
+     * 设置初始位置
+     */
+    @Override
+    public void setInitPosition() {
+        if (this.mTrendView != null) {
+            this.mTrendView.setNowY((float) (this.mPicY.getHeight()));
+            this.mTrendView.setNowX((float) 200);
+        }
     }
 
     public void draw(Canvas canvas, int i, int i2, int i3, int i4, float f) {
-        if (i3 > 0 && i4 > 0 && initOk()) {
+        if (i3 > 0 && i4 > 0 ) {
             CharSequence kuaiPingLeftTime = getKuaiPingLeftTime();
             int width = (int) (((float) this.mPicY.getWidth()) * f);
             int height = (int) (((float) this.mPicY.getHeight()) * f);
@@ -288,7 +301,5 @@ public abstract class ATrendChart implements ITrendChart {
         canvas.drawCircle(rect.exactCenterX(), (float) rect.centerY(), f, paint);
     }
 
-    public boolean initOk() {
-        return this.mInitOk;
-    }
+
 }

@@ -17,11 +17,12 @@ public interface ITrendChart {
 
     void initChart(Context context, int i, int i2, float f);
 
-    boolean initOk();
 
     boolean onClick(MotionEvent motionEvent, float f, float f2, int i, int i2, float f3);
 
     boolean onLongClick(MotionEvent motionEvent, float f, float f2, int i, int i2, float f3);
 
     void reCalcScroll(float f, int i, int i2);
+
+    void setInitPosition();
 }

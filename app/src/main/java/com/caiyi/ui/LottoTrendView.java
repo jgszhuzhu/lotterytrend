@@ -72,6 +72,11 @@ public class LottoTrendView extends View implements OnDoubleTapListener, OnGestu
         return this.mScale;
     }
 
+    /**
+     * 设置是否硬件加速
+     * @param view
+     * @param z
+     */
     @SuppressLint({"NewApi"})
     public static void setHardwareAccelerated(View view, boolean z) {
         if (VERSION.SDK_INT < 11) {
@@ -104,7 +109,7 @@ public class LottoTrendView extends View implements OnDoubleTapListener, OnGestu
 
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (this.mChart != null && this.mChart.initOk()) {
+        if (this.mChart != null  ) {
             if (this.mScroller.computeScrollOffset()) {
                 boolean[] canScroll = this.mChart.getCanScroll();
                 if (canScroll[0]) {
@@ -120,7 +125,7 @@ public class LottoTrendView extends View implements OnDoubleTapListener, OnGestu
     }
 
     public boolean onTouch(View view, MotionEvent motionEvent) {
-        if (this.mChart == null || !this.mChart.initOk()) {
+        if (this.mChart == null ) {
             return false;
         }
         if (this.mChart.getCanScale() && motionEvent.getPointerCount() == 2 && motionEvent.getAction() == 2) {
@@ -134,7 +139,9 @@ public class LottoTrendView extends View implements OnDoubleTapListener, OnGestu
                 return true;
             } else {
                 float[] scaleRange = this.mChart.getScaleRange();
-                this.mScale = Math.max(scaleRange[0], Math.min((this.mScale * x) / this.mLastDistance, scaleRange[1]));
+                this.mScale=1.0f;
+                //去掉放大
+             //   this.mScale = Math.max(scaleRange[0], Math.min((this.mScale * x) / this.mLastDistance, scaleRange[1]));
                 this.mLastDistance = x;
                 refreshPos();
                 return true;
