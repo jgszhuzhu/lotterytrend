@@ -27,7 +27,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class LottoTrendActivity1 extends Activity  {
+public class LottoTrendActivity1 extends Activity  implements BlueTrendChart.ISelectedChangeListener {
 
     private LottoTrendView mTrendView;
     final int maxSignleNum = 9;
@@ -54,7 +54,7 @@ public class LottoTrendActivity1 extends Activity  {
         this.mTrendView.setChart(this.mTrendChart);
         this.mTrendChart.setShowYilou(true);
         this.mTrendChart.setDrawLine(true);
-//        this.mTrendChart.setSelectedChangeListener(this);
+        this.mTrendChart.setSelectedChangeListener(this);
     }
 
     private final OkHttpClient client = new OkHttpClient();

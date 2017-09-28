@@ -297,61 +297,16 @@ public class RedTrendChart extends ATrendChart {
     public void drawXBottom() {
         int i = 1;
         int i2 = (this.mXItemWidth * (this.redCount + this.blueCount)) + this.mDivWidth;
-        int i3 = this.mXItemHeight*i + this.mBottomMargin;
+        int i3 = this.mXItemHeight + this.mBottomMargin;
         Canvas beginRecording = this.mPicXBottom.beginRecording(i2, i3);
-        this.mPaint.setTextSize((float) this.mCTextSize);
+        this.mRect.set(0, 0, i2, i3);
         this.mPaint.setStyle(Style.FILL);
-        for (int i6 = 0; i6 < i; i6++) {
-            if (i6<(i-1)){
-
-            }else{
-                int i7;
-                String str;
-                TrendData trendData = (TrendData) this.mTrendData.get(i6);
-                String[] split = trendData.getRed().split(",");
-//            String[] split2 = trendData.getBlue().split(",");
-                int i8 = this.mXItemHeight * i6;
-                //设置最后四行的位置偏移量
-                //画红球
-                for (i7 = 0; i7 < split.length; i7++) {
-                    Log.i(TAG, "drawXBottom:  开始画 ");
-                    this.mRect.set(this.mXItemWidth * i7, i8, (i7 + 1) * this.mXItemWidth, this.mXItemHeight + i8);
-                    if (!"row".equals(trendData.getType())) {
-                        this.mPaint.setColor(ViewCompat.MEASURED_STATE_MASK);
-                        drawText2Rect(split[i7], beginRecording, this.mRect, this.mPaint);
-                    }
-
-                    else if (split[i7].equals("0")) {
-
-                        this.mPaint.setColor(this.mCBallRed);
-                        beginRecording.drawCircle(this.mRect.exactCenterX(), (float) this.mRect.centerY(), (float) this.mDefBallSize, this.mPaint);
-                        this.mPaint.setColor(-1);
-                        if (i7 < 9) {
-                            str = "0" + (i7 + 1);
-                        } else {
-                            str = "" + (i7 + 1);
-                        }
-                        drawText2Rect(str, beginRecording, this.mRect, this.mPaint);
-                    } else if (this.mShowYilou) {
-                        this.mPaint.setColor(this.mCYilou);
-                        drawText2Rect(split[i7], beginRecording, this.mRect, this.mPaint);
-                    }
-                }
-            }
-
-
-        }
-
-
-
-//        this.mRect.set(0, 0, i2, i3);
-//        this.mPaint.setStyle(Style.FILL);
-//        this.mPaint.setColor(-1);
-//        beginRecording.drawRect(this.mRect, this.mPaint);
-//        this.mPaint.setColor(this.mCDiv);
-//        beginRecording.drawLine(0.0f, 2.0f, (float) i2, 2.0f, this.mPaint);
-//        this.mPaint.setTextSize((float) this.mXTextSize);
-       /* for (int i4 = 1; i4 <= this.redCount; i4++) {
+        this.mPaint.setColor(-1);
+        beginRecording.drawRect(this.mRect, this.mPaint);
+        this.mPaint.setColor(this.mCDiv);
+        beginRecording.drawLine(0.0f, 2.0f, (float) i2, 2.0f, this.mPaint);
+        this.mPaint.setTextSize((float) this.mXTextSize);
+        for (int i4 = 1; i4 <= this.redCount; i4++) {
             String str;
             this.mRect.set((i4 - 1) * this.mXItemWidth, this.mBottomMargin, this.mXItemWidth * i4, i3);
             if (this.mSelectedRed.contains(Integer.valueOf(i4 - 1))) {
@@ -372,8 +327,8 @@ public class RedTrendChart extends ATrendChart {
                 str = "" + i4;
             }
             drawText2Rect(str, beginRecording, this.mRect, this.mPaint);
-        }*/
-       /* while (i <= this.blueCount) {
+        }
+        while (i <= this.blueCount) {
             String str2;
             this.mRect.set((((this.redCount + i) - 1) * this.mXItemWidth) + this.mDivWidth, this.mBottomMargin, ((this.redCount + i) * this.mXItemWidth) + this.mDivWidth, i3);
             if (this.mSelectedBlue.contains(Integer.valueOf(i - 1))) {
@@ -395,7 +350,7 @@ public class RedTrendChart extends ATrendChart {
             }
             drawText2Rect(str2, beginRecording, this.mRect, this.mPaint);
             i++;
-        }*/
+        }
         this.mPicXBottom.endRecording();
     }
 
